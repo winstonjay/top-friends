@@ -1,0 +1,17 @@
+.friend-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 600;
+  transition:
+    filter 0.4s,
+    opacity 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .friend-circle {
+    transition: none;
+  }
+}

@@ -1,0 +1,53 @@
+.home {
+  align-self: stretch;
+  width: 100%;
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
+.home-empty {
+  margin: 3rem 0.5rem;
+  font-size: 0.875rem;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.125rem 0.5rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+}
+
+.home-friend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.home-friend:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+  border-radius: 0.75rem;
+}
+
+.home-friend-name {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.home-friend-quiet {
+  font-size: 0.625rem;
+  opacity: 0.6;
+}

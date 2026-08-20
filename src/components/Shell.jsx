@@ -12,12 +12,17 @@ import './Shell.css'
 export default function Shell({ session }) {
   const { profile, loading, saveName } = useProfile(session)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  // Lives here rather than in Home because the + that opens it does.
+  const [addingFriend, setAddingFriend] = useState(false)
+
+  const showHome = !loading && !settingsOpen && profile
 
   return (
     <div className="shell">
       <NavBar
         settingsOpen={settingsOpen}
         onToggleSettings={() => setSettingsOpen((open) => !open)}
+        onAdd={showHome ? () => setAddingFriend(true) : null}
       />
 
       <main className="shell-body">
@@ -28,7 +33,11 @@ export default function Shell({ session }) {
             onSaveName={saveName}
           />
         ) : profile ? (
-          <Home profile={profile} />
+          <Home
+            session={session}
+            adding={addingFriend}
+            onCloseAdd={() => setAddingFriend(false)}
+          />
         ) : (
           <NameForm
             body="Before the rankings, the formalities. What should this call you?"

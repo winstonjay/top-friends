@@ -1,0 +1,75 @@
+.add-friend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-friend-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Shared cover-form atoms (also used by PersonView). */
+
+.field-label {
+  margin: 0.75rem 0 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.field-input {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+  border-radius: 0.5rem;
+  /* 16px keeps iOS Safari from zooming the viewport on focus. */
+  font-size: 1rem;
+  padding: 0.75rem;
+}
+
+.field-input:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.cover-submit {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  padding: 0.875rem;
+  border: 0;
+  border-radius: 0.75rem;
+  color: var(--bg);
+  background: var(--text);
+  cursor: pointer;
+}
+
+.cover-submit:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.field-error {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: #c02b3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .field-error {
+    color: #ff8b95;
+  }
+}
