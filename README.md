@@ -32,3 +32,9 @@ supabase/migrations/   schema changes, as SQL files
 ```
 
 Conventions for working in this repo are in [CLAUDE.md](CLAUDE.md).
+
+## Deployment
+
+Netlify builds `main` and opens a deploy preview for every pull request.
+Build settings live in `netlify.toml`; the two `VITE_` env vars are set
+in the Netlify UI under Site configuration → Environment variables.

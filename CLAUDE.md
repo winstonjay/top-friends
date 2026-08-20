@@ -4,7 +4,7 @@ Private single-user web app for keeping up with friends. A joke app
 dry and funny, never earnest.
 
 ## Stack
-React + Vite (JS), Supabase (auth/Postgres/storage), Vercel. Mobile-first
+React + Vite (JS), Supabase (auth/Postgres/storage), Netlify. Mobile-first
 PWA, ~390px target. Env: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY.
 Never the service_role key in client code. All tables use RLS
 (auth.uid() = user_id).

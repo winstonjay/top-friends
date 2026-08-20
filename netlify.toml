@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Single-page app: serve index.html for any path the build didn't emit,
+# so client-side routes survive a refresh or a shared link.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in the Netlify UI
+# (Site configuration -> Environment variables), not here — this file is
+# public. Both are anon-safe, but there's no reason to commit them.
