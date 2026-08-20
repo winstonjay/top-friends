@@ -13,12 +13,15 @@ Never the service_role key in client code. All tables use RLS
 - npm run dev / npm test / npm run build — run tests before finishing
 - npm run lint (oxlint) for anything you touched
 - Unit-test derived logic; keep UI tests light
-- Migrations as SQL files in supabase/migrations
+- Migrations as SQL files in supabase/migrations; CI applies them on
+  merge to main, never by hand in the dashboard
 - Small components, inline styles or plain CSS, no UI framework
 - Product/design decisions live in .claude/skills/ — check them before
   building features, and propose skill updates when decisions change
 
 ## Layout
 - src/lib/supabase.js — the one Supabase client, anon key only
+- src/lib/useSession.js — the one source of "is anybody signed in"
 - src/test/setup.js — vitest + jsdom + testing-library setup
 - .env.local — real env values, gitignored (copy .env.example)
+- supabase/README.md — applying migrations, creating the one user

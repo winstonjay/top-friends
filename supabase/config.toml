@@ -1,0 +1,6 @@
+# Supabase CLI project config. The CLI refuses to run in a directory
+# without one, so this exists mainly to make `supabase link` and
+# `supabase db push` work in CI. `supabase init` regenerates a fully
+# commented version if a newer CLI wants more than this.
+
+project_id = "top-friends"

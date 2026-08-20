@@ -28,5 +28,9 @@ dist-ssr
 .env.*
 !.env.example
 
+# Supabase CLI scratch (linked project ref, local branch state)
+supabase/.temp
+supabase/.branches
+
 # Claude Code local overrides
 .claude/settings.local.json
