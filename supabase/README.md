@@ -2,29 +2,77 @@
 
 The schema lives in `migrations/` as plain SQL, so the repo is the record
 of what the database looks like. Changing the schema means adding a file
-here, not clicking around the dashboard.
+here and merging it — not clicking around the dashboard.
 
-## Applying the first migration
+Auth settings are the exception: providers, redirect URLs and the user
+itself are dashboard state, not migrations. Those steps are below.
+
+## How migrations get applied
+
+`.github/workflows/migrations.yml` runs them. A pull request that touches
+`supabase/migrations/` gets a `supabase db push --dry-run` so the pending
+statements show up in the checks; merging to `main` runs the real push.
+Nothing is applied by hand.
+
+It needs three repository secrets (Settings → Secrets and variables →
+Actions):
+
+| Secret | Where it comes from |
+| --- | --- |
+| `SUPABASE_ACCESS_TOKEN` | Account → Access Tokens, on supabase.com |
+| `SUPABASE_DB_PASSWORD` | Project Settings → Database → the password set at project creation |
+| `SUPABASE_PROJECT_REF` | Project Settings → General → Reference ID |
+
+The CLI records what it has applied in `supabase_migrations.schema_migrations`,
+so re-running is a no-op and only new files execute.
+
+### The first one
 
 The three tables were originally created by hand in the SQL editor, so
-they exist in the hosted project already and `create table` would collide
-with them. There's no data worth keeping, so drop them first:
+they exist in the project already and `create table` would collide with
+them. There's no data worth keeping, so drop them once in the SQL editor:
 
 ```sql
 drop table if exists meetups, bindings, people cascade;
 ```
 
-Then run `migrations/20260820000000_initial_schema.sql`, either by pasting
-it into the SQL editor or — if you install the Supabase CLI — with:
+Then merge, and the workflow applies `20260820000000_initial_schema.sql`
+for real. If you'd already run the migration by hand before the workflow
+existed, tell the CLI so instead of dropping anything:
+
+```sh
+supabase migration repair --status applied 20260820000000
+```
+
+### Running one yourself
+
+Occasionally useful — a local Docker stack, or a project the workflow
+doesn't know about:
 
 ```sh
 supabase link --project-ref <your-project-ref>
 supabase db push
 ```
 
-From here on, every schema change is a new timestamped file in
-`migrations/`. `supabase migration new <name>` creates one with the right
-filename if you're using the CLI.
+If the runner or your machine can't reach the direct database connection
+(it is IPv6-only), point the CLI at the session pooler instead, using the
+connection string from Project Settings → Database:
+
+```sh
+supabase db push --db-url "postgresql://postgres.<ref>:<password>@<region>.pooler.supabase.com:5432/postgres"
+```
+
+`db push` only rolls forward. There is no `down` — undoing something
+means writing the migration that undoes it.
+
+### New migrations
+
+```sh
+supabase migration new add_depth_tier_check
+```
+
+That creates a correctly timestamped empty file in `migrations/`. Writing
+the file by hand with the same `<timestamp>_<name>.sql` shape works too.
 
 ## Creating the user
 

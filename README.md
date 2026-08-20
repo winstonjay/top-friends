@@ -32,7 +32,7 @@ npm run preview     # serve the production build locally
 src/lib/        shared clients and helpers (supabase.js, auth.js)
 src/components/ screens and pieces of screens
 src/test/       vitest setup
-supabase/migrations/   schema changes, as SQL files
+supabase/migrations/   schema changes, as SQL files (CI applies them)
 .claude/skills/        product and design decisions
 ```
 
@@ -41,5 +41,7 @@ Conventions for working in this repo are in [CLAUDE.md](CLAUDE.md).
 ## Deployment
 
 Netlify builds `main` and opens a deploy preview for every pull request.
+Schema changes ride along separately: `.github/workflows/migrations.yml`
+dry-runs pending migrations on a pull request and applies them on merge.
 Build settings live in `netlify.toml`; the two `VITE_` env vars are set
 in the Netlify UI under Site configuration → Environment variables.

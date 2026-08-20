@@ -1,0 +1,44 @@
+name: Migrations
+
+# Schema changes go out when they merge, not when somebody remembers to
+# open the SQL editor. Pull requests get a dry run so the statements are
+# visible in the diff review, and main applies them for real.
+
+on:
+  push:
+    branches: [main]
+    paths: ['supabase/migrations/**']
+  pull_request:
+    paths: ['supabase/migrations/**']
+  workflow_dispatch:
+
+# One at a time. Two `db push` runs racing each other against a single
+# project is not a situation worth debugging.
+concurrency:
+  group: supabase-migrations
+  cancel-in-progress: false
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: supabase link --project-ref "$PROJECT_REF"
+
+      - name: Show what would run
+        if: github.event_name == 'pull_request'
+        run: supabase db push --dry-run
+
+      - name: Apply
+        if: github.event_name != 'pull_request'
+        run: supabase db push
