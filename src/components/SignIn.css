@@ -1,0 +1,84 @@
+.signin {
+  width: 100%;
+  max-width: 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signin-title {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.signin-body {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  opacity: 0.7;
+}
+
+.signin-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.signin-input {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+  border-radius: 0.5rem;
+  /* 16px keeps iOS Safari from zooming the viewport on focus. */
+  font-size: 1rem;
+  padding: 0.75rem;
+}
+
+.signin-input:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.signin-button {
+  font: inherit;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border: 0;
+  border-radius: 0.5rem;
+  color: var(--bg);
+  background: var(--text);
+  cursor: pointer;
+}
+
+.signin-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.signin-link {
+  font: inherit;
+  font-size: 0.875rem;
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.6;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signin-error {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #c02b3a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .signin-error {
+    color: #ff8b95;
+  }
+}

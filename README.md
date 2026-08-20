@@ -11,6 +11,10 @@ cp .env.example .env.local   # fill in from the Supabase dashboard
 npm run dev
 ```
 
+First time against a fresh Supabase project, the schema has to be applied
+and the single user created by hand — there is no signup form. See
+[supabase/README.md](supabase/README.md).
+
 ## Scripts
 
 ```sh
@@ -25,7 +29,8 @@ npm run preview     # serve the production build locally
 ## Layout
 
 ```
-src/lib/        shared clients and helpers (supabase.js)
+src/lib/        shared clients and helpers (supabase.js, auth.js)
+src/components/ screens and pieces of screens
 src/test/       vitest setup
 supabase/migrations/   schema changes, as SQL files
 .claude/skills/        product and design decisions
