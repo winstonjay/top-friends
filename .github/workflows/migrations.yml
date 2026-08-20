@@ -19,7 +19,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  push:
+  # Named for what it does to the database, not for git — "push" alone
+  # reads like a commit check when GitHub renders it on a pull request.
+  db-push:
     runs-on: ubuntu-latest
 
     # The three secrets live on this environment, not on the repository,
