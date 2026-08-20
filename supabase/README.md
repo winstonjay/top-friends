@@ -102,12 +102,18 @@ links; strangers get nothing.
 ## Redirect URLs
 
 The magic link comes back to `window.location.origin`, which has to be on
-the allowlist or Supabase silently redirects to the site URL instead.
+the allowlist or Supabase silently redirects to the site URL instead —
+that is the "every link goes to localhost" failure, because a fresh
+project's site URL is `http://localhost:3000`.
 **Authentication → URL Configuration:**
 
-- Site URL: the Netlify production URL
-- Redirect URLs: add `http://localhost:5173/**` for `npm run dev`, plus
-  `https://<your-site>.netlify.app/**` and any deploy-preview pattern
+- Site URL: `https://topfriends.netlify.app`
+- Redirect URLs:
+  - `http://localhost:5173/**` for `npm run dev`
+  - `https://topfriends.netlify.app/**`
+  - `https://*--topfriends.netlify.app/**` — covers Netlify deploy
+    previews (`deploy-preview-12--topfriends...`) and branch deploys
+    (`feature--topfriends...`) in one pattern
 
 ## Checking RLS is actually on
 
