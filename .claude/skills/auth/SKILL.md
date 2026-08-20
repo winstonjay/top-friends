@@ -17,15 +17,29 @@ lost: they cost a reset flow and a secret to keep, for a login used a few
 times a year on one phone. Revisit if this ever stops being a single-user
 app, or if magic links start bouncing off a mail client.
 
-## No users table
+## No users table, but there is a profiles table
 
 `auth.users` is the users table. `user_id uuid not null default auth.uid()`
 points at it, `auth.uid()` reads it out of the JWT, and a second copy would
-only drift.
+only drift. Nothing duplicates an email or a password here.
 
-A `profiles` table gets added the day there's user-owned data that isn't a
-person, a binding, or a meetup — a display name, top-eight slot config,
-notification prefs. Not before. There's currently none.
+`profiles` holds what the app knows about you that Supabase doesn't — for
+now just `display_name`. It arrived when the app needed something to call
+you and stays for the next such fact (slot config, notification prefs).
+Two things about its shape:
+
+- `user_id` is the primary key, not a column alongside an `id`. One row
+  per user, so a surrogate key would only allow states that shouldn't
+  exist.
+- `display_name` is `not null`, so **the row's existence is the flag**.
+  No row means the app still has to ask; there is no half-filled profile
+  and no separate `onboarded` boolean to fall out of sync.
+
+## Asking for a name
+
+A signed-in user with no profile row gets the name prompt instead of the
+app, but the nav bar stays up while they do — a user who doesn't want to
+answer can still reach settings and sign out. Don't trap them behind it.
 
 ## RLS is the whole security model
 
