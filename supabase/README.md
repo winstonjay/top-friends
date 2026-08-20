@@ -14,14 +14,22 @@ itself are dashboard state, not migrations. Those steps are below.
 statements show up in the checks; merging to `main` runs the real push.
 Nothing is applied by hand.
 
-It needs three repository secrets (Settings → Secrets and variables →
-Actions):
+It needs three secrets on the `Deploy` environment (Settings →
+Environments → Deploy → Environment secrets). The workflow job declares
+`environment: Deploy` to reach them; repository-level secrets would work
+too, but then the `environment:` line has to come back out.
 
 | Secret | Where it comes from |
 | --- | --- |
 | `SUPABASE_ACCESS_TOKEN` | Account → Access Tokens, on supabase.com |
 | `SUPABASE_DB_PASSWORD` | Project Settings → Database → the password set at project creation |
 | `SUPABASE_PROJECT_REF` | Project Settings → General → Reference ID |
+
+Two things about that environment are load-bearing. **Deployment branches
+and tags** has to stay unrestricted, or the pull-request dry run can't
+read the secrets. And turning on **Required reviewers** gates the dry run
+as well as the real push, so every schema PR would sit waiting for an
+approval you'd have to click twice.
 
 The CLI records what it has applied in `supabase_migrations.schema_migrations`,
 so re-running is a no-op and only new files execute.
@@ -35,6 +43,9 @@ them. There's no data worth keeping, so drop them once in the SQL editor:
 ```sql
 drop table if exists meetups, bindings, people cascade;
 ```
+
+That is the whole cleanup — the RLS policy you wrote by hand belongs to
+`people` and goes with it. There's nothing to drop separately.
 
 Then merge, and the workflow applies `20260820000000_initial_schema.sql`
 for real. If you'd already run the migration by hand before the workflow
