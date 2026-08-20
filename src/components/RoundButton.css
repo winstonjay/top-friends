@@ -1,0 +1,19 @@
+.round-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 44px: a thumb target, not a cursor target. */
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--text) 20%, transparent);
+  border-radius: 50%;
+  background: var(--bg);
+  color: inherit;
+  cursor: pointer;
+}
+
+.round-button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}

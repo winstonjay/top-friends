@@ -12,6 +12,16 @@ vi.mock('./lib/useProfile.js', () => ({
   }),
 }))
 
+vi.mock('./lib/useFriends.js', () => ({
+  useFriends: () => ({
+    friends: [],
+    loading: false,
+    loadError: null,
+    addFriend: vi.fn(),
+    logMeetup: vi.fn(),
+  }),
+}))
+
 vi.mock('./lib/supabase.js', () => ({
   supabase: {
     auth: {
@@ -40,7 +50,7 @@ describe('App', () => {
   it('puts a signed-in user in the app proper', async () => {
     auth.session = { user: { email: 'karl@example.com' } }
     render(<App />)
-    expect(await screen.findByText('hello, Karl')).toBeInTheDocument()
+    expect(await screen.findByText(/nobody on the wall/i)).toBeInTheDocument()
     expect(
       screen.getByRole('button', { name: /settings/i }),
     ).toBeInTheDocument()
