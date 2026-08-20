@@ -4,6 +4,14 @@ import App from './App.jsx'
 
 const auth = vi.hoisted(() => ({ session: null }))
 
+vi.mock('./lib/useProfile.js', () => ({
+  useProfile: () => ({
+    profile: { display_name: 'Karl' },
+    loading: false,
+    saveName: vi.fn(),
+  }),
+}))
+
 vi.mock('./lib/supabase.js', () => ({
   supabase: {
     auth: {
@@ -29,12 +37,12 @@ describe('App', () => {
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
   })
 
-  it('lets a signed-in user back out', async () => {
+  it('puts a signed-in user in the app proper', async () => {
     auth.session = { user: { email: 'karl@example.com' } }
     render(<App />)
-    expect(await screen.findByText('karl@example.com')).toBeInTheDocument()
+    expect(await screen.findByText('hello, Karl')).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: /sign out/i }),
+      screen.getByRole('button', { name: /settings/i }),
     ).toBeInTheDocument()
   })
 })

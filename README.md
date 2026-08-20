@@ -29,7 +29,8 @@ npm run preview     # serve the production build locally
 ## Layout
 
 ```
-src/lib/        shared clients and helpers (supabase.js, auth.js)
+src/lib/        shared clients and helpers (supabase.js, auth.js,
+                profile.js, the useSession/useProfile hooks)
 src/components/ screens and pieces of screens
 src/test/       vitest setup
 supabase/migrations/   schema changes, as SQL files (CI applies them)
